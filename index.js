@@ -10,9 +10,9 @@ require('./config/PassportConfig');
 const app = express();
 
 app.use(session({
-  secret: 'your_unsecret_key', // You should replace this with a strong secret
-  resave: false,             // Don't resave session if not modified
-  saveUninitialized: true    // Save uninitialized sessions
+  secret: 'your_unsecret_key',
+  resave: false,
+  saveUninitialized: true    
 }));
 app.use(express.json());
 app.use(cors());
