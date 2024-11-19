@@ -47,35 +47,28 @@ exports.signup = async (req, res) => {
 
 
 exports.login = async (req, res) => {
-  const { email, password, role = 'user' } = req.body; // Accept the desired role in the request
+  const { email, password, role = 'user' } = req.body;
 
   try {
-    // Find the user by email and role
     const user = await User.findOne({ email, role });
-    if (!user) {
-      // If user with specific role not found, return a role-specific error
-      return res.status(400).json({ message: `No account with this role (${role}) and email found.` });
-    }
+    if (!user) return res.status(400).json({ message: `No account with this role (${role}) and email found.` });
 
-    // Check if the password matches
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid password' });
-    }
+    if (!isMatch) return res.status(400).json({ message: 'Invalid password' });
 
-    // Check if email is verified
     if (!user.isVerified) {
       return res.status(400).json({ message: 'Email not verified. Please verify your email.', userId: user._id });
     }
 
-    // Generate JWT token with the user's ID and role
     const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const tokenExpiration = Math.floor(Date.now() / 1000) + 3600; // Expiration time in seconds
 
-    res.status(200).json({ userId: user._id, token, role: user.role });
+    res.status(200).json({ userId: user._id, token, role: user.role, tokenExpiration });
   } catch (error) {
     res.status(500).json({ message: 'Login failed. Please try again.', error });
   }
 };
+
 
 
 exports.forgotPassword = async (req, res) => {
