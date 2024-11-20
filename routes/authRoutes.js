@@ -9,6 +9,8 @@ router.post('/login', authController.login);
 
 router.post('/verify-otp', authController.verifyOTP)
 
+router.post('/resend-otp', authController.resendOTP)
+
 router.get('/auth/google',
     passport.authenticate('google', { scope: ['profile', 'email'] })
 );
