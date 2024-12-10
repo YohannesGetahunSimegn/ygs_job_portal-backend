@@ -4,6 +4,7 @@ const {
   getAllUsers,
   deactivateUser,
   activateUser,
+  getAppliedJobs,
 } = require("../controllers/userManageController");
 
 const router = express.Router();
@@ -16,5 +17,8 @@ router.put("/users/deactivate/:id", requireAuth, requireAdmin, deactivateUser);
 
 // PUT route to activate a user (for admin)
 router.put("/users/activate/:id", requireAuth, requireAdmin, activateUser);
+
+// GET all applied jobs by a single user
+router.get("/applied-jobs/:userId", requireAuth, requireAdmin, getAppliedJobs);
 
 module.exports = router;
