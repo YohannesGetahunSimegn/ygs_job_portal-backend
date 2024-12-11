@@ -1,4 +1,6 @@
+const JobPost = require("../models/JobPost");
 const User = require("../models/User");
+const mongoose = require("mongoose");
 
 // Controller to list all users
 exports.getAllUsers = async (req, res) => {
@@ -55,15 +57,33 @@ exports.activateUser = async (req, res) => {
   }
 };
 
-//Get all applied jobs by a single user
+// to get one user
+exports.getOneUser = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await User.findById(id);
 
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({
+      message: "User retrieved successfully",
+      user,
+    });
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({ message: "Error fetching user", error });
+  }
+};
+
+// Admin:  Get all applied jobs by a single user
 exports.getAppliedJobs = async (req, res) => {
   try {
     const userId = req.params.userId;
 
-    // Query to find jobs where the user is a candidate
+    // Query to find jobs where the userId exists in the candidates array (based on userId field)
     const appliedJobs = await JobPost.find(
-      { "candidates._id": userId }, // Check if user ID exists in the candidates array
+      { "candidates.userId": userId }, // Check if the userId exists in the candidates array
       {
         jobTitle: 1,
         companyName: 1,
@@ -71,6 +91,7 @@ exports.getAppliedJobs = async (req, res) => {
       }
     ).lean();
 
+    // Check if there are no applied jobs for the user
     if (!appliedJobs || appliedJobs.length === 0) {
       return res
         .status(404)

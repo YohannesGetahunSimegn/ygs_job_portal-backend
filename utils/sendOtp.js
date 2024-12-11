@@ -1,26 +1,27 @@
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 
 const sendOTP = (email, otp) => {
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: process.env.HOST,
+    port: process.env.MAIL_PORT,
     auth: {
       user: process.env.EMAIL,
-      pass: process.env.PASSWORD
-    }
+      pass: process.env.PASSWORD,
+    },
   });
 
   const mailOptions = {
     from: process.env.EMAIL,
     to: email,
-    subject: 'Your OTP Code',
-    text: `Your OTP code is ${otp}`
+    subject: "Your OTP Code",
+    text: `Your OTP code is ${otp}`,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.log(error);
     } else {
-      console.log('Email sent: ' + info.response);
+      console.log("Email sent: " + info.response);
     }
   });
 };

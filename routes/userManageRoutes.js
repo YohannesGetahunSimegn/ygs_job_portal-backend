@@ -2,6 +2,7 @@ const express = require("express");
 const { requireAuth, requireAdmin } = require("../middleware/authMiddleware");
 const {
   getAllUsers,
+  getOneUser,
   deactivateUser,
   activateUser,
   getAppliedJobs,
@@ -11,6 +12,7 @@ const router = express.Router();
 
 // GET route to list all users (for admin)
 router.get("/users", requireAuth, requireAdmin, getAllUsers);
+router.get("/users/:id", requireAuth, requireAdmin, getOneUser);
 
 // PUT route to deactivate a user (for admin)
 router.put("/users/deactivate/:id", requireAuth, requireAdmin, deactivateUser);

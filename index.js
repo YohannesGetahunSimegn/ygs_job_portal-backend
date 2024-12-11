@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes");
 const jobPostRoutes = require("./routes/jobPostRoutes"); // New job routes
 const userManageRoutes = require("./routes/userManageRoutes"); // manage user route
+const jobRoutes = require("./routes/jobRoutes");
 
 require("./config/PassportConfig");
 
@@ -38,7 +39,8 @@ mongoose
 // Routes
 app.use("/api", authRoutes);
 app.use("/api/jobs", jobPostRoutes); // New route for job functionalities
-app.use("/api/admin", userManageRoutes);
+app.use("/api/admin", userManageRoutes); // for admin to manage users
+app.use("/api/user", jobRoutes); // for users to apply to a job posting
 
 // Start server
 const PORT = process.env.PORT || 5000;
