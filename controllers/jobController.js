@@ -37,10 +37,10 @@ exports.applyForJob = async (req, res) => {
 
     // Add user as a candidate
     const candidate = {
-      userId: user._id, // Add the userId field
+      userId: user._id,
       name: user.name,
       contact,
-      applicationDate,
+      applicationDate: new Date(),
     };
     jobPost.candidates.push(candidate);
     await jobPost.save();

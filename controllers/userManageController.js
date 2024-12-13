@@ -5,11 +5,13 @@ const mongoose = require("mongoose");
 // Controller to list all users
 exports.getAllUsers = async (req, res) => {
   try {
-    // Fetch all users and return only the necessary fields (name, email, role, isVerified)
-    const users = await User.find().select("name email role isVerified");
+    // Fetch only verified users and select necessary fields
+    const users = await User.find({ isVerified: true }).select(
+      "name email role isVerified"
+    );
     res.json(users);
   } catch (error) {
-    res.status(500).json({ message: "Failed to fetch users", error });
+    res.status(500).json({ message: "Failed to fetch verified users", error });
   }
 };
 
@@ -81,13 +83,14 @@ exports.getAppliedJobs = async (req, res) => {
   try {
     const userId = req.params.userId;
 
-    // Query to find jobs where the userId exists in the candidates array (based on userId field)
+    // Query to find jobs where the userId exists in the candidates array, and fetch applicationDate
     const appliedJobs = await JobPost.find(
-      { "candidates.userId": userId }, // Check if the userId exists in the candidates array
+      { "candidates.userId": userId }, // Filter jobs by userId in candidates
       {
         jobTitle: 1,
         companyName: 1,
         pay: 1,
+        "candidates.$": 1, // Get the candidate object that matches the userId
       }
     ).lean();
 
@@ -98,8 +101,20 @@ exports.getAppliedJobs = async (req, res) => {
         .json({ message: "No applied jobs found for this user." });
     }
 
-    // Return the applied jobs as a response
-    res.status(200).json(appliedJobs);
+    // Extract the applicationDate from the candidates array
+    const jobsWithApplicationDate = appliedJobs.map((job) => {
+      const candidate = job.candidates[0]; // There should be only one candidate matching the userId
+      return {
+        jobTitle: job.jobTitle,
+        companyName: job.companyName,
+        pay: job.pay,
+        applicationDate: candidate.applicationDate, // Add the applicationDate here
+        candidateName: candidate.name, // Add the candidate's name here
+      };
+    });
+
+    // Return the applied jobs with application date as a response
+    res.status(200).json(jobsWithApplicationDate);
   } catch (error) {
     console.error("Error fetching applied jobs:", error);
     res.status(500).json({ message: "Server error", error });

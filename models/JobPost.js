@@ -5,6 +5,11 @@ const candidateSchema = new mongoose.Schema({
   name: { type: String, required: true },
   contact: { type: String, required: true },
   applicationDate: { type: Date, required: true },
+  status: {
+    type: String,
+    enum: ["pending", "accepted", "rejected"],
+    default: "pending",
+  },
 });
 
 const jobPostSchema = new mongoose.Schema({
