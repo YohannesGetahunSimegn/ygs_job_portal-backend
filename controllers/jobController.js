@@ -27,7 +27,7 @@ exports.applyForJob = async (req, res) => {
 
     // Check if user has already applied
     const alreadyApplied = jobPost.candidates.some(
-      (candidate) => candidate.name === user.name
+      (candidate) => candidate.userId.toString() === userId.toString()
     );
     if (alreadyApplied) {
       return res

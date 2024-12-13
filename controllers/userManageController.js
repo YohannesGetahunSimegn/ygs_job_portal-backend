@@ -1,6 +1,5 @@
 const JobPost = require("../models/JobPost");
 const User = require("../models/User");
-const mongoose = require("mongoose");
 
 // Controller to list all users
 exports.getAllUsers = async (req, res) => {
@@ -108,13 +107,18 @@ exports.getAppliedJobs = async (req, res) => {
         jobTitle: job.jobTitle,
         companyName: job.companyName,
         pay: job.pay,
-        applicationDate: candidate.applicationDate, // Add the applicationDate here
-        candidateName: candidate.name, // Add the candidate's name here
+        applicationDate: candidate.applicationDate,
+        candidateName: candidate.name,
+        status: candidate.status,
       };
     });
 
+    const sortedJobs = jobsWithApplicationDate.sort(
+      (a, b) => new Date(b.applicationDate) - new Date(a.applicationDate)
+    );
+
     // Return the applied jobs with application date as a response
-    res.status(200).json(jobsWithApplicationDate);
+    res.status(200).json(sortedJobs);
   } catch (error) {
     console.error("Error fetching applied jobs:", error);
     res.status(500).json({ message: "Server error", error });
