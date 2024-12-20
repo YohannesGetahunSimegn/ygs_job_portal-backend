@@ -1,60 +1,64 @@
 const JobPost = require("../models/JobPost");
 
-// Create a new job post
 exports.createJobPost = async (req, res) => {
   const {
     jobTitle,
     location,
     jobType,
-    workplaceType,
     description,
-    responsibilities,
-    tags,
     vacancy,
     email,
-    mobileNumber,
     companyName,
     companyWebsite,
-    social_media_link,
     expires_at,
     pay,
     skills,
   } = req.body;
 
-  let admin_id = req.user?.userId; // Check if the user is authenticated
-  let approved = "Approved"; // Assume job is approved if the user is authenticated
+  const admin_id = req.user?.userId; // Retrieve authenticated user's ID
 
-  // If no token is provided, set admin_id to null and approved to false
+  // Check if the user is authenticated
   if (!admin_id) {
-    approved = false; // Set to unapproved if the user is not authenticated
+    return res.status(401).json({ message: "Unauthorized: Admin ID required" });
+  }
+
+  // Ensure all required fields are provided
+  if (!jobTitle || !location || !jobType || !email || !companyName) {
+    return res.status(400).json({ message: "Missing required fields" });
   }
 
   try {
+    // Create a new job post instance
     const jobPost = new JobPost({
       jobTitle,
       location,
       jobType,
-      workplaceType,
       description,
-      responsibilities,
-      tags,
       vacancy,
       email,
-      mobileNumber,
       companyName,
       companyWebsite,
-      social_media_link: social_media_link || null,
       admin_id,
-      approved, // Set to false if unauthenticated
       expires_at,
       pay,
       skills,
     });
 
+    // Save the job post to the database
     await jobPost.save();
-    res.status(201).json({ message: "Job post created", jobPost });
+
+    res.status(201).json({ message: "Job post created successfully", jobPost });
   } catch (error) {
-    res.status(500).json({ message: "Error creating job post", error });
+    console.error("Error creating job post:", error);
+    // Check for validation errors and respond accordingly
+    if (error.name === "ValidationError") {
+      return res
+        .status(400)
+        .json({ message: "Validation Error", error: error.message });
+    }
+    res
+      .status(500)
+      .json({ message: "Error creating job post", error: error.message });
   }
 };
 
@@ -65,6 +69,7 @@ exports.getAllJobPosts = async (req, res) => {
   try {
     const jobPosts = await JobPost.find(filter)
       .populate("admin_id", "name email") // Fetch admin's name and email
+      .sort({ createdAt: -1 }) // Sort by createdAt in descending order
       .exec();
 
     res.status(200).json(jobPosts);

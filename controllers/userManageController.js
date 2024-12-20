@@ -5,7 +5,7 @@ const User = require("../models/User");
 exports.getAllUsers = async (req, res) => {
   try {
     // Fetch only verified users and select necessary fields
-    const users = await User.find({ isVerified: true }).select(
+    const users = await User.find({ isVerified: true, role: "user" }).select(
       "name email role isVerified"
     );
     res.json(users);

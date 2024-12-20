@@ -69,9 +69,10 @@ exports.login = async (req, res) => {
     const token = jwt.sign(
       { userId: user._id, role: user.role },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: process.env.JWT_EXPIRATION }
     );
-    const tokenExpiration = Math.floor(Date.now() / 1000) + 3600; // Expiration time in seconds
+    const tokenExpiration = Math.floor(Date.now() / 1000) + 15 * 24 * 60 * 60; // Expiration time in seconds (15 days)
+
     res
       .status(200)
       .json({ userId: user._id, token, role: user.role, tokenExpiration });

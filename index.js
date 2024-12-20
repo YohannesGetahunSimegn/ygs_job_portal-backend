@@ -10,7 +10,7 @@ const authRoutes = require("./routes/authRoutes");
 const jobPostRoutes = require("./routes/jobPostRoutes"); // New job routes
 const userManageRoutes = require("./routes/userManageRoutes"); // manage user route
 const jobRoutes = require("./routes/jobRoutes"); // job application route
-const hiringCompanyRoutes = require("./routes/hiringCompanyRoutes");
+const hiringCompanyRoutes = require("./routes/companyRoutes");
 
 require("./config/PassportConfig");
 
