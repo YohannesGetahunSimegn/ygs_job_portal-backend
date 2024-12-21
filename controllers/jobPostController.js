@@ -102,13 +102,36 @@ exports.approveJobPost = async (req, res) => {
 // Update a job post (admin only)
 exports.updateJobPost = async (req, res) => {
   const { id } = req.params;
-  const { title, description, location, job_type, skill_requirements } =
-    req.body;
+  const {
+    jobTitle,
+    location,
+    jobType,
+    description,
+    skills,
+    vacancy,
+    email,
+
+    companyName,
+    companyWebsite,
+    pay,
+  } = req.body;
 
   try {
     const jobPost = await JobPost.findByIdAndUpdate(
       id,
-      { title, description, location, job_type, skill_requirements },
+      {
+        jobTitle,
+        location,
+        jobType,
+        description,
+        skills,
+        vacancy,
+        email,
+
+        companyName,
+        companyWebsite,
+        pay,
+      },
       { new: true }
     );
 
