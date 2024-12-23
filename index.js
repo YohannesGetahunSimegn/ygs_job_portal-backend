@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes");
 const jobPostRoutes = require("./routes/jobPostRoutes"); // New job routes
 const userManageRoutes = require("./routes/userManageRoutes"); // manage user route
+const manageCompanyRoutes = require("./routes/companyManagementRoute"); // manage company route
 const jobRoutes = require("./routes/jobRoutes"); // job application route
 const companyRoutes = require("./routes/companyRoutes");
 
@@ -41,6 +42,7 @@ mongoose
 app.use("/api", authRoutes);
 app.use("/api/jobs", jobPostRoutes); // New route for job functionalities
 app.use("/api/admin", userManageRoutes); // for admin to manage users
+app.use("/api/admin", manageCompanyRoutes); // for admin to manage companies
 app.use("/api/user", jobRoutes); // for users to apply to a job posting
 app.use("/api/company", companyRoutes); // for hiring company
 

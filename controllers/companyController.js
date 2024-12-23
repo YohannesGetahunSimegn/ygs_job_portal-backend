@@ -7,6 +7,7 @@ exports.submitJobPost = async (req, res) => {
   try {
     const {
       aboutCompany,
+      companyLocation,
       jobTitle,
       jobLocation,
       jobType,
@@ -24,6 +25,7 @@ exports.submitJobPost = async (req, res) => {
 
     if (
       !aboutCompany ||
+      !companyLocation ||
       !jobTitle ||
       !jobLocation ||
       !jobType ||
@@ -45,6 +47,7 @@ exports.submitJobPost = async (req, res) => {
         id,
         {
           aboutCompany,
+          companyLocation,
           jobTitle,
           jobLocation,
           jobType,
@@ -68,6 +71,7 @@ exports.submitJobPost = async (req, res) => {
 
     const newCompany = new Company({
       aboutCompany,
+      companyLocation,
       jobTitle,
       jobLocation,
       jobType,
