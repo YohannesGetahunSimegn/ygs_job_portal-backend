@@ -1,7 +1,29 @@
 const mongoose = require("mongoose");
 
 const companySchema = new mongoose.Schema({
-  name: {
+  aboutCompany: { type: String, required: true },
+  jobTitle: {
+    type: String,
+    required: true,
+  },
+  jobLocation: {
+    type: String,
+    required: true,
+  },
+  jobType: {
+    type: String,
+    required: true,
+  },
+  workplace: {
+    type: String,
+    required: true,
+  },
+  jobDescription: {
+    type: String,
+    required: true,
+  },
+  skills: { type: [String], required: true },
+  employee: {
     type: String,
     required: true,
   },
@@ -14,22 +36,24 @@ const companySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  address: {
+  companyName: {
     type: String,
     required: true,
   },
-  linkedin: {
-    type: String,
-  },
-  facebook: {
-    type: String,
-  },
-  twitter: {
-    type: String,
-  },
-  password: {
+  expires_at: {
     type: String,
     required: true,
+  },
+
+  website: {
+    type: String,
+  },
+  socialMedialLink: {
+    type: String,
+  },
+  approved: {
+    type: Boolean,
+    default: false,
   },
 });
 
