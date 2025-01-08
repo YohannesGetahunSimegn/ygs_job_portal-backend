@@ -24,7 +24,7 @@ const jobPostSchema = new mongoose.Schema({
   companyWebsite: { type: String, default: null },
   pay: { type: String }, // Field for pay value
   candidates: [candidateSchema],
-  activeCandidates: [candidateSchema],
+  rejectedCandidates: [candidateSchema],
   hiredCandidates: [candidateSchema],
   admin_id: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // Linked to User
   createdAt: { type: Date, default: Date.now },

@@ -178,6 +178,18 @@ exports.updateApplicationStatus = async (req, res) => {
       return res.status(404).json({ message: "Job post not found" });
     }
 
+    // Check if the application is already in hiredCandidates or rejectedCandidates
+    const isInHired = jobPost.hiredCandidates.some(
+      (candidate) => candidate._id.toString() === applicationId
+    );
+    const isInRejected = jobPost.rejectedCandidates.some(
+      (candidate) => candidate._id.toString() === applicationId
+    );
+
+    if (isInHired || isInRejected) {
+      return res.status(400).json({ message: "Application already processed" });
+    }
+
     // Find the application within the candidates array
     const candidateIndex = jobPost.candidates.findIndex(
       (candidate) => candidate._id.toString() === applicationId
@@ -187,17 +199,20 @@ exports.updateApplicationStatus = async (req, res) => {
       return res.status(404).json({ message: "Application not found" });
     }
 
-    // Update the status of the application
-    jobPost.candidates[candidateIndex].status = status;
+    // Extract the candidate from the candidates array
+    const [candidate] = jobPost.candidates.splice(candidateIndex, 1);
+
+    // Update the status of the candidate
+    candidate.status = status;
 
     // Move the candidate to the corresponding list (hired or rejected)
     if (status === "accepted") {
-      jobPost.hiredCandidates.push(jobPost.candidates[candidateIndex]);
+      jobPost.hiredCandidates.push(candidate);
     } else if (status === "rejected") {
-      jobPost.rejectedCandidates.push(jobPost.candidates[candidateIndex]);
+      jobPost.rejectedCandidates.push(candidate);
     }
 
-    // Save the job post with the updated candidate status
+    // Save the job post with the updated candidate lists
     await jobPost.save();
 
     res.status(200).json({ message: `Application ${status} successfully` });

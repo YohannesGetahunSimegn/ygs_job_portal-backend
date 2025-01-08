@@ -77,48 +77,59 @@ exports.getOneUser = async (req, res) => {
   }
 };
 
-// Admin:  Get all applied jobs by a single user
+// Admin:  Get all applied jobs by a user
 exports.getAppliedJobs = async (req, res) => {
   try {
     const userId = req.params.userId;
 
-    // Query to find jobs where the userId exists in the candidates array, and fetch applicationDate
+    // Query to find jobs where the userId exists in any candidate list
     const appliedJobs = await JobPost.find(
-      { "candidates.userId": userId }, // Filter jobs by userId in candidates
+      {
+        $or: [
+          { "candidates.userId": userId },
+          { "hiredCandidates.userId": userId },
+          { "rejectedCandidates.userId": userId },
+        ],
+      },
       {
         jobTitle: 1,
         companyName: 1,
         pay: 1,
-        "candidates.$": 1, // Get the candidate object that matches the userId
+        candidates: 1,
+        hiredCandidates: 1,
+        rejectedCandidates: 1,
       }
     ).lean();
 
-    // Check if there are no applied jobs for the user
     if (!appliedJobs || appliedJobs.length === 0) {
       return res
         .status(404)
         .json({ message: "No applied jobs found for this user." });
     }
 
-    // Extract the applicationDate from the candidates array
-    const jobsWithApplicationDate = appliedJobs.map((job) => {
-      const candidate = job.candidates[0]; // There should be only one candidate matching the userId
-      return {
-        jobTitle: job.jobTitle,
-        companyName: job.companyName,
-        pay: job.pay,
-        applicationDate: candidate.applicationDate,
-        candidateName: candidate.name,
-        status: candidate.status,
-      };
-    });
+    // Process results to include only relevant candidates
+    const jobsWithApplicationDate = appliedJobs
+      .map((job) => {
+        const userIdStr = String(userId);
+        const relevantCandidate =
+          job.candidates.find((c) => String(c.userId) === userIdStr) ||
+          job.hiredCandidates.find((c) => String(c.userId) === userIdStr) ||
+          job.rejectedCandidates.find((c) => String(c.userId) === userIdStr);
 
-    const sortedJobs = jobsWithApplicationDate.sort(
-      (a, b) => new Date(b.applicationDate) - new Date(a.applicationDate)
-    );
+        if (!relevantCandidate) return null; // Skip if no relevant candidate is found
 
-    // Return the applied jobs with application date as a response
-    res.status(200).json(sortedJobs);
+        return {
+          jobTitle: job.jobTitle,
+          companyName: job.companyName,
+          pay: job.pay,
+          applicationDate: relevantCandidate.applicationDate,
+          candidateName: relevantCandidate.name,
+          status: relevantCandidate.status,
+        };
+      })
+      .filter((job) => job !== null); // Remove null entries
+
+    res.status(200).json(jobsWithApplicationDate);
   } catch (error) {
     console.error("Error fetching applied jobs:", error);
     res.status(500).json({ message: "Server error", error });

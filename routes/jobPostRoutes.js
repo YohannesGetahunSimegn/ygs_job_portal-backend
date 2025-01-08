@@ -44,4 +44,11 @@ router.delete(
   jobPostController.deleteJobPost
 );
 
+router.patch(
+  "/job-posts/:jobPostId/applications/:applicationId/status",
+  requireAuth,
+  requireAdmin,
+  jobPostController.updateApplicationStatus
+);
+
 module.exports = router;
