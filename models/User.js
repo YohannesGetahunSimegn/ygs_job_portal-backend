@@ -9,7 +9,9 @@ const userSchema = new mongoose.Schema({
   otp: String,
   isVerified: { type: Boolean, default: false },
   phone: String,
+  gender: String,
   address: String,
+  birthdate: String,
 });
 
 module.exports = mongoose.model("User", userSchema);
