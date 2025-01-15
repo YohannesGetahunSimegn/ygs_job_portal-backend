@@ -1,0 +1,582 @@
+{
+  "info": {
+    "_postman_id": "43003f62-a095-4222-8654-b23f96f6e625",
+    "name": "Swift Hire admin dashboard",
+    "description": "Api for admin dashboard",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "37127035"
+  },
+  "item": [
+    {
+      "name": "register, verify and login",
+      "item": [
+        {
+          "name": "user register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"trial user\",\r\n  \"email\": \"trialuser@example.com\",\r\n  \"password\": \"trial\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/signup",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "signup"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Admin register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"swift admin\",\r\n  \"email\": \"swiftadmin@example.com\",\r\n  \"password\": \"swiftadmin\",\r\n  \"role\": \"admin\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/signup",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "signup"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Admin Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"yohannes@gmail.com\",\r\n  \"password\": \"yohannes\",\r\n  \"role\": \"admin\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"userId\": \"677a8a97b2331ce913456fb3\",\r\n  \"otp\": \"731738\",\r\n  \"role\": \"user\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/verify-otp",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "verify-otp"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "user login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \r\n \"email\": \"trialuser@example.com\",\r\n  \"password\": \"trial\",\r\n  \"role\": \"user\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "login"]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "login/register as user or admin"
+    },
+    {
+      "name": "user management",
+      "item": [
+        {
+          "name": "Admin get all users",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzViMDE2OWFlMTRjYWRlYjdiZmNmYTQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzU5OTAzNTgsImV4cCI6MTczNzI4NjM1OH0.oreV0B0v3DJQD9tJpzVgBySDhrxPzP3gBtjPv11TluM",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/admin/users",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "admin", "users"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Admin get one user",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzViMDE2OWFlMTRjYWRlYjdiZmNmYTQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzQxMTUxMjAsImV4cCI6MTczNDExODcyMH0.b3YR0-x6pC92LCag-yAOK5BfIk0-i2bDiGNktnqyfnE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/admin/users/67595e0919c96fa221231522",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "admin", "users", "67595e0919c96fa221231522"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Admin deactivate user",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzViMDE2OWFlMTRjYWRlYjdiZmNmYTQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzQxMTUxMjAsImV4cCI6MTczNDExODcyMH0.b3YR0-x6pC92LCag-yAOK5BfIk0-i2bDiGNktnqyfnE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/admin/users/deactivate/675953ab1984dbf24eee7aa0",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": [
+                "api",
+                "admin",
+                "users",
+                "deactivate",
+                "675953ab1984dbf24eee7aa0"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Admin Activate user",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzViMDE2OWFlMTRjYWRlYjdiZmNmYTQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzQ0MzE0NzEsImV4cCI6MTczNTcyNzQ3MX0.tYCITJApoKYWXL5TETg8rmihU2K0U0L9W2xI8ttoIww",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/admin/users/activate/675956ae1984dbf24eee7aae",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": [
+                "api",
+                "admin",
+                "users",
+                "activate",
+                "675956ae1984dbf24eee7aae"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "appled jobs by a user",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzViMDE2OWFlMTRjYWRlYjdiZmNmYTQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzU5OTAzNTgsImV4cCI6MTczNzI4NjM1OH0.oreV0B0v3DJQD9tJpzVgBySDhrxPzP3gBtjPv11TluM",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/admin/applied-jobs/677a8a97b2331ce913456fb3",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": [
+                "api",
+                "admin",
+                "applied-jobs",
+                "677a8a97b2331ce913456fb3"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Company management",
+      "item": [
+        {
+          "name": "get all companies",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzViMDE2OWFlMTRjYWRlYjdiZmNmYTQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzQ5NDg1OTUsImV4cCI6MTczNjI0NDU5NX0.nRbLI_ttyHIcmDZPzMUzx4VANfSnTcyGIiFJCv7H53Y",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/admin/companies",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "admin", "companies"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Apply job user",
+      "item": [
+        {
+          "name": "apply job ( user )",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzdhOGE5N2IyMzMxY2U5MTM0NTZmYjMiLCJyb2xlIjoidXNlciIsImlhdCI6MTczNjA4NDIzMSwiZXhwIjoxNzM3MzgwMjMxfQ.Imwnn0r_rT-oXj9P9GkmUmOCx7ejmwBmrov3hEpWTw0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"userId\": \"677a8a97b2331ce913456fb3\",\r\n  \"contact\": \"+1115999588\",\r\n  \"applicationDate\": \"2024-12-22\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/user/apply/677a88f5b2331ce913456f86",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "user", "apply", "677a88f5b2331ce913456f86"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Job management",
+      "item": [
+        {
+          "name": "Admin post job",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzViMDE2OWFlMTRjYWRlYjdiZmNmYTQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzU5OTAzNTgsImV4cCI6MTczNzI4NjM1OH0.oreV0B0v3DJQD9tJpzVgBySDhrxPzP3gBtjPv11TluM",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"jobTitle\": \"Software Engineer\",\r\n  \"location\": \"New York, NY\",\r\n  \"jobType\": \"Full-Time\",\r\n  \"workplaceType\": \"Remote\",\r\n  \"description\": \"We are looking for a skilled software engineer to join our dynamic team.\",\r\n  \"skills\": [\"JavaScript\", \"Node.js\", \"React\", \"MongoDB\"],\r\n  \"vacancy\": 2,\r\n  \"email\": \"hr@company.com\",\r\n  \"companyName\": \"Tech Solutions Inc.\",\r\n  \"companyWebsite\": \"https://www.techsolutions.com\",\r\n  \"pay\": \"$100,000 - $120,000 per year\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/jobs/post-job",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "jobs", "post-job"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Admin get all jobs",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzViMDE2OWFlMTRjYWRlYjdiZmNmYTQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzU5OTAzNTgsImV4cCI6MTczNzI4NjM1OH0.oreV0B0v3DJQD9tJpzVgBySDhrxPzP3gBtjPv11TluM",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/jobs/all-jobs",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "jobs", "all-jobs"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "accept, reject",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzViMDE2OWFlMTRjYWRlYjdiZmNmYTQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzU5OTE5NzEsImV4cCI6MTczNzI4Nzk3MX0.s-S87J8qZ9D8Tf8z5LioYBdEVkFlUisvlNaSH4DhgvE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"status\": \"rejected\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/jobs/job-posts/67667bfe577da01ac4314a75/applications/6778dff9bc34d957b434e579/status",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": [
+                "api",
+                "jobs",
+                "job-posts",
+                "67667bfe577da01ac4314a75",
+                "applications",
+                "6778dff9bc34d957b434e579",
+                "status"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Hire labour submit form",
+      "item": [
+        {
+          "name": "submiit form",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"aboutCompany\": \"We are a tech-driven company specializing in AI and machine learning solutions.\",\r\n  \"jobTitle\": \"Software Engineer\",\r\n  \"jobLocation\": \"San Francisco, CA\",\r\n  \"jobType\": \"Full-time\",\r\n  \"workplace\": \"Hybrid\",\r\n  \"jobDescription\": \"We are looking for a skilled software engineer to join our dynamic team and work on cutting-edge AI projects.\",\r\n  \"skills\": [\"JavaScript\", \"Node.js\", \"React\", \"MongoDB\", \"AWS\"],\r\n  \"employee\": \"50-200\",\r\n  \"email\": \"hr@techcompany.com\",\r\n  \"phone\": \"+1234567890\",\r\n  \"companyName\": \"Tech Company Inc.\",\r\n  \"expires_at\": \"2024-12-31\",\r\n  \"website\": \"https://www.techcompany.com\",\r\n  \"socialMedialLink\": \"https://linkedin.com/company/techcompany\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/company/submit",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "company", "submit"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "chat",
+      "item": [
+        {
+          "name": "send message",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzdhOGE5N2IyMzMxY2U5MTM0NTZmYjMiLCJyb2xlIjoidXNlciIsImlhdCI6MTczNjA4NDIzMSwiZXhwIjoxNzM3MzgwMjMxfQ.Imwnn0r_rT-oXj9P9GkmUmOCx7ejmwBmrov3hEpWTw0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"senderId\": \"677a8a97b2331ce913456fb3\",\r\n  \"receiverId\": \"675b0169ae14cadeb7bfcfa4\",\r\n  \"content\": \"how are you doing?\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/chat/send",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "chat", "send"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get users that send messages (Admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzViMDE2OWFlMTRjYWRlYjdiZmNmYTQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzY0MTY0MjgsImV4cCI6MTczNzcxMjQyOH0.Z4QHbU8LGXUdQ18B1S16SsBGZF9uUbFawPPNi0etXx8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/chat/users",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "chat", "users"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get chat ( user and admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzViMDE2OWFlMTRjYWRlYjdiZmNmYTQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzY0MTY0MjgsImV4cCI6MTczNzcxMjQyOH0.Z4QHbU8LGXUdQ18B1S16SsBGZF9uUbFawPPNi0etXx8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/chat/677a8a97b2331ce913456fb3/675b0169ae14cadeb7bfcfa4",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": [
+                "api",
+                "chat",
+                "677a8a97b2331ce913456fb3",
+                "675b0169ae14cadeb7bfcfa4"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
