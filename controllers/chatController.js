@@ -43,6 +43,7 @@ exports.getUserMessages = async (req, res) => {
             email: 1,
             role: 1,
             phone: 1,
+            avator: 1,
             gender: 1,
             address: 1,
             birthdate: 1,
